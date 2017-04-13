@@ -64,17 +64,10 @@ public class TestAddress {
 		Address tested = this.address;
 		assertEquals("Route des landes", tested.getLine1());
 	}
-
-	@Test
-	public void testGetLine2_isNull() {
-		setAddress();
-		Address tested = this.address;
-		assertEquals(null, tested.getLine2());
-	}
 	@Test
 	public void testGetLine2() {
-		Address tested = new Address("Route des landes", "chemin du baudet", "40120", "Cachen");
-		assertEquals("chemin du baudet", tested.getLine2());
+		Address tested = new Address("Route des landes", null, "40120", "Cachen");
+		assertEquals("", tested.getLine2());
 	}
 	@Test
 	public void testGetPostalCode() {
