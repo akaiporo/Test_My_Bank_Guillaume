@@ -3,6 +3,7 @@ package metier.test;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
 import metier.TransactionType;
 
 public class TestTransactionType {
@@ -19,23 +20,31 @@ public class TestTransactionType {
 	
 	@Test
 	public void testGetId() {
-		this.tested = new TransactionType("foo");
 		this.tested.setId(1);
 		assertEquals(1,this.tested.getId());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetId() {
-		this.tested = new TransactionType("foo");
 		this.tested.setId(-3);
 	}
 
 	@Test
 	public void testGetWording() {
-		this.tested = new TransactionType("retrait");
-		assertEquals("retrait",this.tested.getWording());
+		assertEquals("foo",this.tested.getWording());
 	}
 	
-	private TransactionType tested;
+	@Test
+	public void testEquals_IsValid() {
+		TransactionType tested2 = new TransactionType("foo");
+		assertTrue(tested.equals(tested2));
+	}
+	@Test
+	public void testEquals_IsInvalid() {
+		TransactionType tested2 = new TransactionType("fool");
+		assertFalse(tested.equals(tested2));
+	}
+	
+	private TransactionType tested = new TransactionType("foo");;
 
 }

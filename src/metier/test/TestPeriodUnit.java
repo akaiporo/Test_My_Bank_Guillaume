@@ -20,7 +20,6 @@ public class TestPeriodUnit {
 
 	@Test
 	public void testGetId() {
-		this.tested = new PeriodUnit("hebdomadaire");
 		this.tested.setId(1);
 		assertEquals(1,this.tested.getId());
 		
@@ -28,17 +27,25 @@ public class TestPeriodUnit {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetId() {
-		this.tested = new PeriodUnit("hebdomadaire");
 		this.tested.setId(-2);	
 	}
 
 	@Test
-	public void testGetUnit_UnitIsEmpty() {
-		this.tested = new PeriodUnit("hebdomadaire");
+	public void testGetUnit_UnitIsEmpty() { 
 		assertEquals("hebdomadaire",this.tested.getUnit());
 	}
 	
+	@Test
+	public void testEquals_IsValid() {
+		PeriodUnit tested2 = new PeriodUnit("hebdomadaire");
+		assertTrue(tested.equals(tested2));
+	}
 	
-	private PeriodUnit tested;
-
+	@Test
+	public void testEquals_IsInvalid() {
+		PeriodUnit tested2 = new PeriodUnit("hebdo");
+		assertFalse(tested.equals(tested2));
+	}
+	
+	private PeriodUnit tested = new PeriodUnit("hebdomadaire");;
 }

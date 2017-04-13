@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import metier.CountryCode;
 import metier.TargetTransaction;
 
 public class TestTargetTransaction {
@@ -54,6 +55,20 @@ public class TestTargetTransaction {
 	public void testGetIBAN() {
 		TargetTransaction tested = setTarget();
 		assertEquals("frhdteyf45gtf1dju98hgd1jup2", tested.getIBAN());
+	}
+	
+	@Test
+	public void testEquals_IsValid() {
+		TargetTransaction tested = setTarget();
+		TargetTransaction tested2 = new TargetTransaction("Banque", "frhdteyf45gtf1dju98hgd1jup2");
+		assertTrue(tested.equals(tested2));
+	}
+	
+	@Test
+	public void testEquals_IsInvalid() {
+		TargetTransaction tested = setTarget();
+		TargetTransaction tested2 = new TargetTransaction("Banque", "frhdteyf45gtf1dju98hgd1jupA");
+		assertFalse(tested.equals(tested2));
 	}
 
 }

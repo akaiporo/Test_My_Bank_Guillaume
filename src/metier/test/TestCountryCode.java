@@ -24,21 +24,31 @@ public class TestCountryCode {
 	
 	@Test
 	public void testGetId() {
-		CountryCode tested=new CountryCode("ZZ");
 		tested.setId(1);
 		assertEquals(1,tested.getId());
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetId() {
-		CountryCode tested=new CountryCode("ZZ");
 		tested.setId(-2);
 	}
 
 	@Test
 	public void testGetCountryCode() {
-		CountryCode tested=new CountryCode("ZZ");
 		assertEquals("ZZ",tested.getCountryCode());
 	}
-
+	
+	@Test
+	public void testEquals_IsValid() {
+		CountryCode tested2 = new CountryCode("ZZ");
+		assertTrue(tested.equals(tested2));
+	}
+	
+	@Test
+	public void testEquals_IsinValid() {
+		CountryCode tested2 = new CountryCode("AA");
+		assertFalse(tested.equals(tested2));
+	}
+	
+	private CountryCode tested=new CountryCode("ZZ");
 }

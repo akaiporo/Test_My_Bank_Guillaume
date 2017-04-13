@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import metier.Address;
+import metier.Bank;
 
 public class TestAddress {
 
@@ -94,13 +95,22 @@ public class TestAddress {
 		setAddress();
 		Address tested = this.address;
 		Address tested_Address = new Address("Route des landes", null, "40120", "Rillons des landes");
-		assertTrue(tested_Address.equals(tested));
+		tested_Address.equals(tested);
 	}
 	@Test 
 	public void testEquals_isInvalid(){
 		setAddress();
 		Address tested = this.address;
 		Address tested_Address = new Address("Route landes", null, "40120", "Rillons des landes");
-		assertFalse(tested_Address.equals(tested));
+		tested_Address.equals(tested);
 	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testEquals_isImpossible(){
+		setAddress();
+		Address tested = this.address;
+		Bank tested_Address = new Bank("lol", "lololol");
+		tested_Address.equals(tested);
+	}
+
+
 }

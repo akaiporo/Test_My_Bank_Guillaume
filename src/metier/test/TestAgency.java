@@ -6,12 +6,12 @@ import org.junit.Test;
 import metier.Address;
 import metier.Agency;
 import metier.Bank;
-import static org.mockito.Mockito.*;
+
 public class TestAgency {
 
 	public Agency initAgency(){
 		return new Agency("Beaulieu","12015",
-			   new Address("Route des landes", "", "40120", "Rillons des landes"),
+			   new Address("Route des landes", null, "40120", "Rillons des landes"),
 			   new Bank("Caisse d'épargne", "bank_code"));
 	}
 	
@@ -61,7 +61,7 @@ public class TestAgency {
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetId_Invalid() {
 		Agency tested = initAgency();
-		tested.setId(-6);
+		tested.setId(-2);
 	}
 	@Test
 	public void testGetAgencyName() {
@@ -78,7 +78,7 @@ public class TestAgency {
 	@Test
 	public void testGetAddress() {
 		Agency tested = initAgency();
-		Address tested_address = new Address("Route des landes", "", "40120", "Rillons des landes");
+		Address tested_address = new Address("Route des landes", null, "40120", "Rillons des landes");
 		assertEquals(tested_address,tested.getAddress());
 	}
 	@Test

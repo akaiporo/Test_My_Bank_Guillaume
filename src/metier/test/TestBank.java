@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import metier.Address;
 import metier.Bank;
 
 public class TestBank {
@@ -61,4 +62,11 @@ public class TestBank {
 		Bank tested_bank=new Bank("fo","bar");
 		tested.equals(tested_bank);
 	}	
+	@Test(expected=IllegalArgumentException.class)
+	public void testEquals_isImpossible(){
+		Bank tested=new Bank("foo","bar");
+		Address tested_bank=new Address("foo","bar", "145", "mdrlaville");
+		tested.equals(tested_bank);
+	}
+
 }
