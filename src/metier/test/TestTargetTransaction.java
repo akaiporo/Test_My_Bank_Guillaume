@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import metier.CountryCode;
 import metier.TargetTransaction;
 
 public class TestTargetTransaction {
