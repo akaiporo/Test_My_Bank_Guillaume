@@ -15,7 +15,7 @@ public class TestCategory {
 	public void testCategory_Wording_isNull() {
 		new Category(null, null);
 	}
-	@Test
+	@Test 
 	public void testCategory() {
 		new Category("blblblb", null);
 	}
