@@ -1,36 +1,40 @@
 package metier.test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import org.junit.Test;
 
 import metier.Address;
 import metier.Agency;
 import metier.Bank;
+import metier.CpCity;
 
 public class TestAgency {
 
+	CpCity mockCpCity = mock(CpCity.class);
+	
 	public Agency initAgency(){
 		return new Agency("Beaulieu","12015",
-			   new Address("Route des landes", null, "40120", "Rillons des landes"),
+			   new Address("Route des landes", null, this.mockCpCity),
 			   new Bank("Caisse d'épargne", "bank_code"));
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testAgency_Name_isEmpty() {
 		new Agency("","12015",
-				   new Address("Route des landes", null, "40120", "Rillons des landes"),
+				   new Address("Route des landes", null, mock(CpCity.class)),
 				   new Bank("Caisse d'épargne", "bank_code"));
 	}
 	@Test(expected=NullPointerException.class)
 	public void testAgency_Name_isNull() {
 		new Agency(null,"12015",
-				   new Address("Route des landes", null, "40120", "Rillons des landes"),
+				   new Address("Route des landes", null, mock(CpCity.class)),
 				   new Bank("Caisse d'épargne", "bank_code"));
 	}
 	@Test(expected=IllegalArgumentException.class)
 	public void testAgency_CounterCode_HasInvalidLength() {
 		new Agency("Beaulieu","115",
-				   new Address("Route des landes", null, "40120", "Rillons des landes"),
+				   new Address("Route des landes", null, mock(CpCity.class)),
 				   new Bank("Caisse d'épargne", "bank_code"));
 	}
 	@Test(expected=NullPointerException.class)
@@ -40,7 +44,7 @@ public class TestAgency {
 	}
 	@Test(expected=NullPointerException.class)
 	public void testAgency_Bank_isNull() {
-		new Agency("Beaulieu","12015", new Address("Route des landes", null, "40120", "Rillons des landes"),null);
+		new Agency("Beaulieu","12015", new Address("Route des landes", null,mock(CpCity.class)),null);
 	}
 	@Test
 	public void testAgency() {
@@ -78,7 +82,7 @@ public class TestAgency {
 	@Test
 	public void testGetAddress() {
 		Agency tested = initAgency();
-		Address tested_address = new Address("Route des landes", null, "40120", "Rillons des landes");
+		Address tested_address = new Address("Route des landes", null, this.mockCpCity);
 		assertEquals(tested_address,tested.getAddress());
 	}
 	@Test

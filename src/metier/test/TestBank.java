@@ -1,11 +1,13 @@
 package metier.test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
 import metier.Address;
 import metier.Bank;
+import metier.CpCity;
 
 public class TestBank {
 
@@ -65,7 +67,7 @@ public class TestBank {
 	@Test(expected=IllegalArgumentException.class)
 	public void testEquals_isImpossible(){
 		Bank tested=new Bank("foo","bar");
-		Address tested_bank=new Address("foo","bar", "145", "mdrlaville");
+		Address tested_bank=new Address("foo","bar", mock(CpCity.class));
 		tested.equals(tested_bank);
 	}
 
