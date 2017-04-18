@@ -2,43 +2,35 @@ package metier.test;
 
 import static org.junit.Assert.*;
 
+import static org.mockito.Mockito.*;
+
 import org.junit.Test;
 
 import metier.Address;
 import metier.Bank;
+import metier.CpCity;
 
 public class TestAddress {
 
 	Address address;
+	CpCity mockCpCity = mock(CpCity.class);
 	
 	public void setAddress(){
-		this.address = new Address("Route des landes", null, "40120", "Rillons des landes");
+		this.address = new Address("Route des landes", null, this.mockCpCity);
 		this.address.setId(1);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testAddress_Line_isEmpty() {
-		new Address("", null, "40120", "Rillons des landes");
+		new Address("", null, mock(CpCity.class));
 	}
-	@Test(expected=IllegalArgumentException.class)
-	public void testAddress_PostalCode_isEmpty() {
-		new Address("Route des landes", null, "", "Rillons des landes");
-	}
-	@Test(expected=IllegalArgumentException.class)
-	public void testAddress_City_isEmpty() {
-		new Address("Route des landes", null, "40120", "");
+	@Test(expected=NullPointerException.class)
+	public void testAddress_CpCity_isNull() {
+		new Address("Route des landes", null, null);
 	}
 	@Test(expected=NullPointerException.class)
 	public void testAddress_Line_isNull() {
-		new Address(null, null, "40120", "Rillons des landes");
-	}
-	@Test(expected=NullPointerException.class)
-	public void testAddress_PostalCode_isNull() {
-		new Address("Route des landes", null, null, "Rillons des landes");
-	}
-	@Test(expected=NullPointerException.class)
-	public void testAddress_City_isNull() {
-		new Address("Route des landes", null, "40120", null);
+		new Address(null, null, mock(CpCity.class));
 	}
 	@Test
 	public void testGetId() {
@@ -66,44 +58,28 @@ public class TestAddress {
 	}
 	@Test
 	public void testGetLine2() {
-		Address tested = new Address("Route des landes", null, "40120", "Cachen");
-		assertEquals("", tested.getLine2());
-	}
-	@Test
-	public void testGetPostalCode() {
-		setAddress();
-		Address tested = this.address;
-		assertEquals("40120", tested.getPostalCode());
+		this.setAddress();
+		assertEquals("", this.address.getLine2());
 	}
 
 	@Test
-	public void testGetCity() {
+	public void testGetCpCity() {
 		setAddress();
-		Address tested = this.address;
-		assertEquals("Rillons des landes", tested.getCity());
+		assertEquals(this.mockCpCity, this.address.getCpCity());
 	}
 	
 	@Test 
 	public void testEquals_isValid(){
 		setAddress();
 		Address tested = this.address;
-		Address tested_Address = new Address("Route des landes", null, "40120", "Rillons des landes");
+		Address tested_Address = new Address("Route des landes", null, this.mockCpCity);
 		tested_Address.equals(tested);
 	}
 	@Test 
 	public void testEquals_isInvalid(){
 		setAddress();
 		Address tested = this.address;
-		Address tested_Address = new Address("Route landes", null, "40120", "Rillons des landes");
+		Address tested_Address = new Address("Route landes", null, this.mockCpCity);
 		tested_Address.equals(tested);
 	}
-	@Test(expected=IllegalArgumentException.class)
-	public void testEquals_isImpossible(){
-		setAddress();
-		Address tested = this.address;
-		Bank tested_Address = new Bank("lol", "lololol");
-		tested_Address.equals(tested);
-	}
-
-
 }

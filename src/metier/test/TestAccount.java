@@ -3,7 +3,6 @@ package metier.test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Before;
