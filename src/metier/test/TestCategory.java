@@ -24,7 +24,6 @@ public class TestCategory {
 		Category tested = new Category("blblblb", null);
 		tested.setId(1);
 		assertEquals(1, tested.getId());
-		
 	}
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetId_isInvalid() {
