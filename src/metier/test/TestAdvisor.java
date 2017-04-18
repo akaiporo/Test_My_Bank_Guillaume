@@ -2,6 +2,8 @@ package metier.test;
 
 import static org.junit.Assert.*;
 
+import static org.mockito.Mockito.*;
+
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -11,11 +13,12 @@ import metier.Address;
 import metier.Advisor;
 import metier.Agency;
 import metier.Bank;
+import metier.CpCity;
 
 public class TestAdvisor {
 
 	private Agency agency_tested = new Agency("Beaulieu","12015",
-			new Address("Route des landes", null, "40120", "Rillons des landes"),
+			new Address("Route des landes", null, mock(CpCity.class)),
 			new Bank("Caisse d'Epargne", "bank_code")
 	);
 	
