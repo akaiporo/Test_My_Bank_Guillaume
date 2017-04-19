@@ -198,22 +198,36 @@ public class TestPeriodicTransaction {
 	public void testGetTransactionType() {
 		assertEquals(type_tested,tested.getTransactionType());
 	}
-
+	@Test
+	public void testGetTransactionTypeWording() {
+		assertEquals(type_tested.getWording(),tested.getTransactionType().getWording());
+	}
 	@Test
 	public void testGetTargetTransaction() {
 		assertEquals(target_tested,tested.getTargetTransaction());
+	}
+	@Test
+	public void testGetTargetTransactionName() {
+		assertEquals(target_tested.getTargetName(),tested.getTargetTransaction().getTargetName());
 	}
 
 	@Test
 	public void testGetCategory() {
 		assertEquals(category_tested,tested.getCategory());
 	}
+	@Test
+	public void testGetCategoryWording() {
+		assertEquals(category_tested.getWording(),tested.getCategory().getWording());
+	}
 
 	@Test
 	public void testGetPeriodUnit() {
 		assertEquals(period_tested,tested.getPeriodUnit());
 	}
-
+	@Test
+	public void testGetPeriodUnitName() {
+		assertEquals(period_tested.getUnit(),tested.getPeriodUnit().getUnit());
+	}
 	
 	private TransactionType type_tested = new TransactionType("bar");
 	private TargetTransaction target_tested = new TargetTransaction("Banque", "frhdteyf45gtf1dju98hgd1jup2");
