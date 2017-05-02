@@ -72,7 +72,7 @@ public class TestPerson {
 		public void testGetName() {
 			ConretePerson tested = initPerson();
 			assertEquals("Gerard", tested.getName());
-		}
+		} 
 	
 		@Test
 		public void testGetFirstName() {
