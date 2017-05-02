@@ -64,11 +64,5 @@ public class TestBank {
 		Bank tested_bank=new Bank("fo","bar");
 		tested.equals(tested_bank);
 	}	
-	@Test(expected=IllegalArgumentException.class)
-	public void testEquals_isImpossible(){
-		Bank tested=new Bank("foo","bar");
-		Address tested_bank=new Address("foo","bar", mock(CpCity.class));
-		tested.equals(tested_bank);
-	}
 
 }
