@@ -89,7 +89,7 @@ public class TestPerson {
 		@Test
 		public void testGetEmail() {
 			ConretePerson tested = initPerson();
-			assertEquals("g.majax@gmail.com", tested.getEmail());
+			assertEquals("g.majax@gmail.com", tested.getMail());
 		}
 	}
 
