@@ -1,27 +1,31 @@
 package metier.test;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
-import metier.Address;
 import metier.Bank;
-import metier.CpCity;
 
 public class TestBank {
 
+	private Bank tested;
+	private void initBank(){
+		tested=new Bank("foo","bar");
+	}
+	
+	
 	@Test(expected  = NullPointerException.class)
 	public void testCountryCode_BankNameIsNull() {
 		new Bank(null,"bar");
 	}
-	@Test(expected  = NullPointerException.class)
-	public void testCountryCode_BankCodeIsNull() {
-		new Bank("foo",null);
-	}
 	@Test(expected  = IllegalArgumentException.class)
 	public void testCountryCode_BankNameIsEmpty() {
 		new Bank("","bar");
+	}
+	
+	@Test(expected  = NullPointerException.class)
+	public void testCountryCode_BankCodeIsNull() {
+		new Bank("foo",null);
 	}
 	@Test(expected  = IllegalArgumentException.class)
 	public void testCountryCode_BankCodeIsEmpty() {
@@ -30,39 +34,77 @@ public class TestBank {
 
 	@Test
 	public void testGetId() {
-		Bank tested=new Bank("foo","bar");
+		initBank();
 		tested.setId(1);
 		assertEquals(1,tested.getId());
 	}
-
 	@Test(expected = IllegalArgumentException.class)
-	public void testSetId() {
-		Bank tested=new Bank("foo","bar");
+	public void testSetId_Invalid() {
+		initBank();
 		tested.setId(-2);
 	}
+	@Test
+	public void testSetId() {
+		initBank();
+		tested.setId(2);
+	}
+	
 	
 	@Test
 	public void testGetBankName() {
-		Bank tested=new Bank("foo","bar");
+		initBank();
 		assertEquals("foo",tested.getBankName());
 	}
+	@Test(expected=NullPointerException.class)
+	public void testSetBankName_Null(){
+		initBank();
+		tested.setBankName(null);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetBankName_Empty(){
+		initBank();
+		tested.setBankName("");
+	}
+	@Test
+	public void testSetBankName(){
+		initBank();
+		tested.setBankName("ba");
+	}
+	
 
 	@Test
 	public void testGetBankCode() {
-		Bank tested=new Bank("foo","bar");
+		initBank();
 		assertEquals("bar",tested.getBankCode());
 	}
+	@Test(expected=NullPointerException.class)
+	public void testSetBankCode_Null(){
+		initBank();
+		tested.setBankCode(null);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetBankCode_Empty(){
+		initBank();
+		tested.setBankCode("");
+	}
+	@Test
+	public void testSetBankCode(){
+		initBank();
+		tested.setBankCode("fo");
+	}
+	
+
 	@Test
 	public void testEquals_isValid(){
-		Bank tested=new Bank("foo","bar");
+		initBank();
 		Bank tested_bank=new Bank("foo","bar");
-		tested.equals(tested_bank);
+		assertTrue(tested.equals(tested_bank));
 	}
 	@Test
 	public void testEquals_isInvalid(){
-		Bank tested=new Bank("foo","bar");
+		initBank();
 		Bank tested_bank=new Bank("fo","bar");
-		tested.equals(tested_bank);
+		assertFalse(tested.equals(tested_bank));
 	}	
 
 }

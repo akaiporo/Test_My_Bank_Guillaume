@@ -5,52 +5,88 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.junit.Test;
-
-import metier.Address;
+import application.Tools;
 import metier.Advisor;
 import metier.Agency;
-import metier.Bank;
-import metier.CpCity;
 
 public class TestAdvisor {
 
-	private Agency agency_tested = new Agency("Beaulieu","12015",
-			new Address("Route des landes", null, mock(CpCity.class)),
-			new Bank("Caisse d'Epargne", "bank_code")
-	);
+	private Agency mockAgency=mock(Agency.class);
+	private Advisor tested;
 	
-	private Advisor initTested (Date d, Agency a){
-		return new Advisor("toto","tutu","0345567891","toto.tutu@titi.tata",d,a);		
+	private void initTested(Date d, Agency a){
+		this.tested=new Advisor ("toto","tutu","0345567891","toto.tutu@titi.tata",d,a);
 	}
+	private void setTested (){
+		initTested(Tools.pastDate(),mockAgency);		
+	}
+	
 	
 	@Test (expected = NullPointerException.class )
 	public void testAdvisor_DateAssignmentIsNull() {
-		initTested (null, agency_tested);
+		initTested (null, mockAgency);
 	}
-	
 	@Test (expected = IllegalArgumentException.class )
 	public void testAdvisor_DateAssignmentInTheFuture() {
-		initTested (new GregorianCalendar (2018,4,10).getTime(), agency_tested);
+		initTested (Tools.futureDate(), mockAgency);
 	}
-	
 	@Test (expected = NullPointerException.class )
 	public void testAdvisor_AgencyIsNull() {
-		initTested (new GregorianCalendar (2016,4,10).getTime(), null);
+		initTested (Tools.pastDate(), null);
 	}
+	
 	
 	@Test
 	public void testGetDateAssignment() {
-		Advisor tested = initTested (new GregorianCalendar (2016,4,10).getTime(), agency_tested);
-		assertEquals(new GregorianCalendar (2016,4,10).getTime(),tested.getDateAssignment());	
+		setTested();
+		assertEquals(Tools.pastDate(),this.tested.getDateAssignment());	
 	}
-
+	@Test (expected=NullPointerException.class)
+	public void testSetDateAssignment_Null(){
+		setTested();
+		this.tested.setDateAssignment(null);
+	}
+	@Test 
+	public void testSetDateAssignment(){
+		setTested();
+		this.tested.setDateAssignment(Tools.pastDate());
+	}
+	@Test (expected=IllegalArgumentException.class)
+	public void testSetDateAssignment_Future(){
+		setTested();
+		this.tested.setDateAssignment(Tools.futureDate());
+	}
+	
+	
 	@Test
 	public void testGetAgency() {
-		Advisor tested = initTested (new GregorianCalendar (2016,4,10).getTime(), agency_tested);
-		assertEquals(agency_tested,tested.getAgency());
+		setTested();
+		assertEquals(this.mockAgency,tested.getAgency());
 	}
-
+	@Test (expected=NullPointerException.class)
+	public void testSetAgency_Null(){
+		setTested();
+		this.tested.setAgency(null);
+	}
+	@Test
+	public void testSetAgency(){
+		setTested();
+		this.tested.setAgency(mockAgency);
+	}
+	
+	
+	@Test
+	public void equals_Valid(){
+		setTested();
+		Advisor tested2=new Advisor ("toto","tutu","0345567891","toto.tutu@titi.tata",Tools.pastDate(),mockAgency);
+		assertTrue(tested2.equals(tested));
+	}
+	@Test
+	public void equals_Invalid(){
+		setTested();
+		Advisor tested2=new Advisor ("toto","tut","0345567891","toto.tutu@titi.tata",Tools.pastDate(),mockAgency);
+		assertFalse(tested2.equals(tested));
+	}
 }

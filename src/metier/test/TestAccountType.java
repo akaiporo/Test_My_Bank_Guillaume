@@ -20,36 +20,46 @@ public class TestAccountType {
 
 	@Test
 	public void testGetId() {
-		this.tested = new AccountType("foo");
 		this.tested.setId(1);
 		assertEquals(1,this.tested.getId());
-		
 	}
 
+	@Test
+	public void testSetId(){
+		this.tested.setId(1);
+	}
+	
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetId_IsInvalid() {
-		this.tested = new AccountType("foo");
 		this.tested.setId(-3);
 	}
 
 	@Test
 	public void testGetAccountType() {
-		this.tested = new AccountType("épargne");
-		assertEquals("épargne",this.tested.getAccountType());
+		assertEquals("foo",this.tested.getAccountType());
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testSetAccountType_IsEmpty(){
+		tested.setAccountType("");
+	}
+	
+	@Test (expected = NullPointerException.class)
+	public void testSetAccountType_IsNull(){
+		tested.setAccountType(null);
 	}
 
 	@Test 
 	public void testEquals_isValid(){
-		this.tested = new AccountType("épargne");
-		assertTrue(this.tested.equals(accountType));
+		AccountType tested2=new AccountType("foo");
+		assertTrue(this.tested.equals(tested2));
 	}
 	@Test 
 	public void testEquals_isInvalid(){
-		this.tested = new AccountType("epargne");
-		assertFalse(this.tested.equals(accountType));
+		AccountType tested2=new AccountType("fool");
+		assertFalse(this.tested.equals(tested2));
 	}
 	
-	private AccountType tested;
-	private AccountType accountType = new AccountType("épargne");
+	private AccountType tested=new AccountType("foo");
 
 }
