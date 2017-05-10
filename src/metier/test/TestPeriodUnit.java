@@ -24,16 +24,29 @@ public class TestPeriodUnit {
 		assertEquals(1,this.tested.getId());
 		
 	}
-
 	@Test(expected = IllegalArgumentException.class)
-	public void testSetId() {
+	public void testSetId_Invalid() {
 		this.tested.setId(-2);	
 	}
+	@Test
+	public void testSetId_Valid(){
+		this.tested.setId(8);
+	}
 
+	
 	@Test
 	public void testGetUnit_UnitIsEmpty() { 
 		assertEquals("hebdomadaire",this.tested.getUnit());
 	}
+	@Test(expected=NullPointerException.class)
+	public void testSetUnit_Null(){
+		this.tested.setUnit(null);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetUnit_Empty(){
+		this.tested.setUnit("");
+	}
+	
 	
 	@Test
 	public void testEquals_IsValid() {

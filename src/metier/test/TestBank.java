@@ -2,6 +2,7 @@ package metier.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import metier.Bank;
@@ -9,7 +10,9 @@ import metier.Bank;
 public class TestBank {
 
 	private Bank tested;
-	private void initBank(){
+	
+	@Before
+	public void initBank(){
 		tested=new Bank("foo","bar");
 	}
 	
@@ -52,57 +55,47 @@ public class TestBank {
 	
 	@Test
 	public void testGetBankName() {
-		initBank();
 		assertEquals("foo",tested.getBankName());
 	}
 	@Test(expected=NullPointerException.class)
 	public void testSetBankName_Null(){
-		initBank();
 		tested.setBankName(null);
 	}
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetBankName_Empty(){
-		initBank();
 		tested.setBankName("");
 	}
 	@Test
 	public void testSetBankName(){
-		initBank();
 		tested.setBankName("ba");
 	}
 	
 
 	@Test
 	public void testGetBankCode() {
-		initBank();
 		assertEquals("bar",tested.getBankCode());
 	}
 	@Test(expected=NullPointerException.class)
 	public void testSetBankCode_Null(){
-		initBank();
 		tested.setBankCode(null);
 	}
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetBankCode_Empty(){
-		initBank();
 		tested.setBankCode("");
 	}
 	@Test
 	public void testSetBankCode(){
-		initBank();
 		tested.setBankCode("fo");
 	}
 	
 
 	@Test
 	public void testEquals_isValid(){
-		initBank();
 		Bank tested_bank=new Bank("foo","bar");
 		assertTrue(tested.equals(tested_bank));
 	}
 	@Test
 	public void testEquals_isInvalid(){
-		initBank();
 		Bank tested_bank=new Bank("fo","bar");
 		assertFalse(tested.equals(tested_bank));
 	}	

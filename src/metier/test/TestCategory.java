@@ -2,11 +2,21 @@ package metier.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import metier.Category;
 public class TestCategory {
+	
+	private Category tested;
+	
+	@Before
+	public void initTested(){
+		this.tested = new Category("blblblb", null);
+		this.tested.setId(1);
+	}
 
+	
 	@Test(expected=IllegalArgumentException.class)
 	public void testCategory_Wording_isInvalid() {
 		new Category("", null);
@@ -19,32 +29,61 @@ public class TestCategory {
 	public void testCategory() {
 		new Category("blblblb", null);
 	}
+	
+	
 	@Test
 	public void testGetId() {
-		Category tested = new Category("blblblb", null);
-		tested.setId(1);
 		assertEquals(1, tested.getId());
 	}
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetId_isInvalid() {
-		Category tested = new Category("blblblb", null);
 		tested.setId(-1);	
 	}
 	@Test
 	public void testSetId() {
-		Category tested = new Category("blblblb", null);
 		tested.setId(1);	
 	}
+	
+	
 	@Test
 	public void testGetWording() {
-		Category tested = new Category("blblblb", null);
 		assertEquals("blblblb", tested.getWording());
 	}
+	@Test(expected=NullPointerException.class)
+	public void testSetWording_Null(){
+		tested.setWording(null);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetWording_Empty(){
+		tested.setWording("");
+	}
+	@Test
+	public void testSetWording_Valid(){
+		tested.setWording("blabla");
+	}
+	
 
 	@Test
 	public void testGetCategory() {
-		Category tested = new Category("blblblb", null);
 		assertEquals(null, tested.getCategory());
 	}
+	@Test 
+	public void testSetCategory_Valid(){
+		Category tested2=new Category();
+		tested2.setCategory(tested);
+	}
+	
+	
+	@Test
+	public void testEquals_True(){
+		Category tested2 = new Category("blblblb", null);
+		assertTrue(tested2.equals(tested));
+	}
+	@Test
+	public void testEquals_False(){
+		Category tested2 = new Category("blbb", null);
+		assertFalse(tested2.equals(tested));
+	}
+	
 
 }

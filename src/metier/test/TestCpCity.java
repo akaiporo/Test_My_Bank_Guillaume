@@ -33,39 +33,63 @@ public class TestCpCity {
 	public void testCpCity_CityisNull() {
 		new CpCity("64000", null);
 	}
-	@Test(expected=IllegalArgumentException.class)
-	public void testSetId_isInvalid() {
-		this.cpcity.setId(-1);
-	}
-	@Test
-	public void testSetId() {
-		this.cpcity.setId(1);
-	}
-
+	
+	
 	@Test
 	public void testGetId() {
 		this.cpcity.setId(1);
 		assertEquals(1, this.cpcity.getId());
 	}
+	@Test
+	public void testSetId_Valid() {
+		this.cpcity.setId(1);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetId_isInvalid() {
+		this.cpcity.setId(-1);
+	}
+	
 
 	@Test
 	public void testGetPostalCode() {
 		assertEquals("64000", this.cpcity.getPostalCode());
 	}
+	@Test(expected=NullPointerException.class)
+	public void testSetPostalCode_Null(){
+		this.cpcity.setPostalCode(null);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetPostalCode_Invalid(){
+		this.cpcity.setPostalCode("jug");
+	}
 
+	
 	@Test
 	public void testGetCity() {
 		assertEquals("Pau", this.cpcity.getCity());
 	}
-
+	@Test
+	public void testSetCity_Valid(){
+		this.cpcity.setCity("Saint-Médard");
+	}
+	@Test(expected=NullPointerException.class)
+	public void testSetCity_Null(){
+		this.cpcity.setCity(null);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetCity_Empty(){
+		this.cpcity.setCity("");
+	}
+	
+	
 	@Test 
 	public void testEquals_isValid(){
 		CpCity tested_cpcity =  new CpCity("64000", "Pau");
-		tested_cpcity.equals(this.cpcity);
+		assertTrue(tested_cpcity.equals(this.cpcity));
 	}
 	@Test 
 	public void testEquals_isInvalid(){
 		CpCity tested_cpcity =  new CpCity("65000", "Pau");
-		tested_cpcity.equals(this.cpcity);
+		assertFalse(tested_cpcity.equals(this.cpcity));
 	}
 }

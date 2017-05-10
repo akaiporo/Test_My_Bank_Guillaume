@@ -1,11 +1,12 @@
 package metier.test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
-import java.util.GregorianCalendar;
-
+import org.junit.Before;
 import org.junit.Test;
 
+import application.Tools;
 import metier.Category;
 import metier.PeriodUnit;
 import metier.PeriodicTransaction;
@@ -14,13 +15,37 @@ import metier.TransactionType;
 
 public class TestPeriodicTransaction {
 	
+	private TransactionType type_tested = mock(TransactionType.class);
+	private TargetTransaction target_tested = mock(TargetTransaction.class);
+	private Category category_tested = mock(Category.class);
+	private PeriodUnit period_tested = mock(PeriodUnit.class);
+	private PeriodicTransaction tested;
+	
+	
+	@Before
+	public void initTested(){
+		tested= new PeriodicTransaction(
+				"babebiboo",
+				12.7,
+				Tools.pastDate(), 
+				Tools.futureDate(),
+				4,
+				"foo", 
+				type_tested,
+				target_tested,
+				category_tested,
+				period_tested
+		);
+		tested.setId(1);
+	}
+	
 	@Test (expected  = NullPointerException.class)
 	public void testPeriodicTransaction_WordingIsNull() {
 		new PeriodicTransaction(
 				null,
 				12.7,
-				new GregorianCalendar(2016,4,10,16,55).getTime(), 
-				new GregorianCalendar (2018,4,10).getTime(),
+				Tools.pastDate(), 
+				Tools.futureDate(),
 				4,
 				"foo", 
 				type_tested,
@@ -34,8 +59,8 @@ public class TestPeriodicTransaction {
 		new PeriodicTransaction(
 				"",
 				12.7,
-				new GregorianCalendar(2016,4,10,16,55).getTime(), 
-				new GregorianCalendar (2018,4,10).getTime(),
+				Tools.pastDate(), 
+				Tools.futureDate(),
 				4,
 				"foo", 
 				type_tested,
@@ -50,9 +75,9 @@ public class TestPeriodicTransaction {
 	public void testPeriodicTransaction_ValueIsNull() {
 		new PeriodicTransaction(
 				"babebiboo",
-				null,
-				new GregorianCalendar(2016,4,10,16,55).getTime(), 
-				new GregorianCalendar (2018,4,10).getTime(),
+				0.0,
+				Tools.pastDate(), 
+				Tools.futureDate(),
 				4,
 				"foo", 
 				type_tested,
@@ -68,7 +93,7 @@ public class TestPeriodicTransaction {
 				"babebiboo",
 				12.7,
 				null, 
-				new GregorianCalendar (2018,4,10).getTime(),
+				Tools.futureDate(),
 				4,
 				"foo", 
 				type_tested,
@@ -82,8 +107,8 @@ public class TestPeriodicTransaction {
 		new PeriodicTransaction(
 				"babebiboo",
 				12.7,
-				new GregorianCalendar(2016,4,10,16,55).getTime(), 
-				new GregorianCalendar (2018,4,10).getTime(),
+				Tools.pastDate(), 
+				Tools.futureDate(),
 				0,
 				"foo", 
 				type_tested,
@@ -97,8 +122,8 @@ public class TestPeriodicTransaction {
 		new PeriodicTransaction(
 				"babebiboo",
 				12.7,
-				new GregorianCalendar(2016,4,10,16,55).getTime(), 
-				new GregorianCalendar (2018,4,10).getTime(),
+				Tools.pastDate(), 
+				Tools.futureDate(),
 				4,
 				"foo", 
 				type_tested,
@@ -112,8 +137,8 @@ public class TestPeriodicTransaction {
 		new PeriodicTransaction(
 				"babebiboo",
 				12.7,
-				new GregorianCalendar(2016,4,10,16,55).getTime(), 
-				new GregorianCalendar (2018,4,10).getTime(),
+				Tools.pastDate(), 
+				Tools.futureDate(),
 				4,
 				"foo", 
 				null,
@@ -127,8 +152,8 @@ public class TestPeriodicTransaction {
 		new PeriodicTransaction(
 				"babebiboo",
 				12.7,
-				new GregorianCalendar(2016,4,10,16,55).getTime(), 
-				new GregorianCalendar (2018,4,10).getTime(),
+				Tools.pastDate(), 
+				Tools.futureDate(),
 				4,
 				"foo", 
 				type_tested,
@@ -142,8 +167,8 @@ public class TestPeriodicTransaction {
 		new PeriodicTransaction(
 				"babebiboo",
 				12.7,
-				new GregorianCalendar(2016,4,10,16,55).getTime(), 
-				new GregorianCalendar (2018,4,10).getTime(),
+				Tools.pastDate(), 
+				Tools.futureDate(),
 				4,
 				"foo", 
 				type_tested,
@@ -153,97 +178,196 @@ public class TestPeriodicTransaction {
 		);
 	}
 
+	
 	@Test
 	public void testGetId() {
-		tested.setId(1);
 		assertEquals(1,tested.getId());
 	}
-
 	@Test (expected = IllegalArgumentException.class)
-	public void testSetId() {
+	public void testSetId_Invalid() {
 		tested.setId(-2);
 	}
+	@Test
+	public void testSetId_Valid() {
+		tested.setId(3);
+	}
 
+	
 	@Test
 	public void testGetWording() {
 		assertEquals("babebiboo",tested.getWording());
 	}
+	@Test(expected=NullPointerException.class)
+	public void testSetWording_Null(){
+		tested.setWording(null);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetWording_Empty(){
+		tested.setWording("");
+	}
+	@Test
+	public void testSetWording_Valid(){
+		tested.setWording("boo");
+	}
+	
 
 	@Test
 	public void testGetTransactionValue() {
 		assertEquals(12.7,tested.getTransactionValue(),0);
 	}
+	@Test(expected=NullPointerException.class)
+	public void testSetTransactionValue_Null(){
+		tested.setTransactionValue(0.0);
+	}
+	
 
 	@Test
 	public void testGetDateOperation() {
-		assertEquals(new GregorianCalendar(2016,4,10,16,55).getTime(),tested.getDateOperation()); 
+		assertEquals(Tools.pastDate(),tested.getDateOperation()); 
 	}
-
+	@Test(expected=NullPointerException.class)
+	public void testSetDateOperation_Null(){
+		tested.setDateOperation(null);
+	}
 	@Test
-	public void testGetEndDateTransaction() {
-		assertEquals(new GregorianCalendar(2018,4,10).getTime(),tested.getEndDateTransaction());
+	public void testSetDateOperation_Valid(){
+		tested.setDateOperation(Tools.today());
 	}
+	
+	
+	@Test
+	public void testGetEndDateTransaction(){
+		assertEquals(Tools.futureDate(),tested.getEndDateTransaction());
+	}
+	@Test
+	public void testSetEndDateTransaction_Valid(){
+		tested.setEndDateTransaction(null);
+	}
+	
 
 	@Test
 	public void testGetDayNumber() {
 		assertEquals(4,tested.getDayNumber());
 	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetDayNumber_Invalid(){
+		tested.setDayNumber(0);
+	}
+	@Test
+	public void testSetDayNumber_Valid(){
+		tested.setDayNumber(250);
+	}
 
+	
 	@Test
 	public void testGetDescription() {
 		assertEquals("foo",tested.getDescription());
 	}
+	@Test
+	public void testSetDescription_Valid(){
+		tested.setDescription("346dghdf");
+	}
+
 
 	@Test
 	public void testGetTransactionType() {
 		assertEquals(type_tested,tested.getTransactionType());
 	}
-	@Test
-	public void testGetTransactionTypeWording() {
-		assertEquals(type_tested.getWording(),tested.getTransactionType().getWording());
+	@Test(expected=NullPointerException.class)
+	public void testSetTransactionType_Null(){
+		tested.setTransactionType(null);
 	}
+	@Test
+	public void testSetTransactionType_Valid(){
+		tested.setTransactionType(type_tested);
+	}
+	
+	
 	@Test
 	public void testGetTargetTransaction() {
 		assertEquals(target_tested,tested.getTargetTransaction());
 	}
-	@Test
-	public void testGetTargetTransactionName() {
-		assertEquals(target_tested.getTargetName(),tested.getTargetTransaction().getTargetName());
+	@Test(expected=NullPointerException.class)
+	public void testSetTargetTransaction_Null(){
+		tested.setTargetTransaction(null);
 	}
+	@Test
+	public void testSetTargetTransaction_Valid(){
+		tested.setTargetTransaction(target_tested);
+	}
+	
 
 	@Test
 	public void testGetCategory() {
 		assertEquals(category_tested,tested.getCategory());
 	}
-	@Test
-	public void testGetCategoryWording() {
-		assertEquals(category_tested.getWording(),tested.getCategory().getWording());
+	@Test(expected=NullPointerException.class)
+	public void testSetCategory_Null(){
+		tested.setCategory(null);
 	}
+	@Test
+	public void testSetCategory_Valid(){
+		tested.setCategory(category_tested);
+	}
+
 
 	@Test
 	public void testGetPeriodUnit() {
 		assertEquals(period_tested,tested.getPeriodUnit());
 	}
+	@Test(expected=IllegalAccessError.class)
+	public void testSetPeriodUnit_Null(){
+		tested.setPeriodUnit(null);
+	}
 	@Test
-	public void testGetPeriodUnitName() {
-		assertEquals(period_tested.getUnit(),tested.getPeriodUnit().getUnit());
+	public void setPeriodUnit_Valid(){
+		tested.setPeriodUnit(period_tested);
 	}
 	
-	private TransactionType type_tested = new TransactionType("bar");
-	private TargetTransaction target_tested = new TargetTransaction("Banque", "frhdteyf45gtf1dju98hgd1jup2");
-	private Category category_tested = new Category("blblblb",null);
-	private PeriodUnit period_tested = new PeriodUnit("hebdomadaire");
 	
-	private PeriodicTransaction tested= new PeriodicTransaction(
-			"babebiboo",
-			12.7,
-			new GregorianCalendar(2016,4,10,16,55).getTime(), 
-			new GregorianCalendar (2018,4,10).getTime(),
-			4,
-			"foo", 
-			type_tested,
-			target_tested,
-			category_tested,
-			period_tested
-	);
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetPeriodParam_DayNumberInvalid(){
+		tested.setPeriodParam(period_tested,0);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetPeriodParam_PeriodUnitNull(){
+		tested.setPeriodParam(null,3);
+	}
+	
+	
+	@Test
+	public void testEquals_Valid(){
+		PeriodicTransaction tested2=new PeriodicTransaction(
+				"babebiboo",
+				12.7,
+				Tools.pastDate(), 
+				Tools.futureDate(),
+				4,
+				"foo", 
+				type_tested,
+				target_tested,
+				category_tested,
+				period_tested
+				);
+		assertTrue(tested.equals(tested2));
+	}
+	
+	
+	@Test
+	public void testEquals_Invalid(){
+		PeriodicTransaction tested2=new PeriodicTransaction(
+				"babebiboo",
+				12.7,
+				Tools.pastDate(), 
+				Tools.futureDate(),
+				4,
+				"fo", 
+				type_tested,
+				target_tested,
+				category_tested,
+				period_tested
+				);
+		assertFalse(tested.equals(tested2));
+	}
+	
 }
