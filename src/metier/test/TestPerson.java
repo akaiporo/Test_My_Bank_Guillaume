@@ -14,7 +14,7 @@ public class TestPerson {
 		public ConcretePerson(String string, String string2, String string3, String string4) {
 			super(string, string2, string3, string4);
 		}
-		
+	}
 		private ConcretePerson tested;
 		
 		@Before
@@ -114,7 +114,7 @@ public class TestPerson {
 		}
 		@Test(expected=IllegalArgumentException.class)
 		public void testSetPhoneNumber_Invalid(){
-			this.tested.setPhoneNumber("012365");
+			this.tested.setPhoneNumber("012");
 		}
 		@Test
 		public void testSetPhoneNumber_Valid(){
@@ -148,6 +148,6 @@ public class TestPerson {
 		}
 		
 		
-	}
+	
 
 }
