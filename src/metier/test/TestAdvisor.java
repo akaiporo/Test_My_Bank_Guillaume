@@ -89,4 +89,11 @@ public class TestAdvisor {
 		Advisor tested2=new Advisor ("toto","tut","0345567891","toto.tutu@titi.tata",Tools.pastDate(),mockAgency);
 		assertFalse(tested2.equals(tested));
 	}
+	
+	
+	@Test
+	public void testToString(){
+		setTested();
+		assertEquals("toto tutu",this.tested.toString());
+	}
 }

@@ -1,12 +1,13 @@
 package metier.test;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
+/*import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;*/
 
 import application.Tools;
 import metier.Account;
@@ -24,6 +25,7 @@ public class TestAccount {
 	Agency mockAgency = mock(Agency.class);
 	CountryCode mockCountryCode = mock(CountryCode.class);
 	AccountType mockAccountType = mock(AccountType.class);
+	
 	Account account;
 	
 	@Before
@@ -257,5 +259,14 @@ public class TestAccount {
 		assertEquals(numberTransaction+1, this.account.getTransactions().size());
 		
 	}
+	
+	
+	@Test
+	public void testToString(){
+		when(mockAccountType.getAccountType()).thenReturn("compte courant");
+		when(mockAgency.getAgencyName()).thenReturn("Crédit coopératif");
+		assertEquals("compte courant Crédit coopératif fg1265fr459",this.account.toString());
+	}
 
 }
+

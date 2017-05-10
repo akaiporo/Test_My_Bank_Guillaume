@@ -99,5 +99,11 @@ public class TestBank {
 		Bank tested_bank=new Bank("fo","bar");
 		assertFalse(tested.equals(tested_bank));
 	}	
+	
+	
+	@Test
+	public void testToString(){
+		assertEquals("foo",this.tested.toString());
+	}
 
 }

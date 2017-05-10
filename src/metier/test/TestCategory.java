@@ -86,4 +86,8 @@ public class TestCategory {
 	}
 	
 
+	@Test
+	public void testToString(){
+		assertEquals("blblblb",this.tested.toString());
+	}
 }

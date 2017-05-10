@@ -2,11 +2,19 @@ package metier.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import metier.CountryCode;
 
 public class TestCountryCode {
+	
+	private CountryCode tested;
+	
+	@Before
+	public void initTested(){
+		tested=new CountryCode("ZZ");
+	}
 
 	@Test(expected  = NullPointerException.class)
 	public void testCountryCode_codeIsNull() {
@@ -65,6 +73,10 @@ public class TestCountryCode {
 		CountryCode tested2 = new CountryCode("AA");
 		assertFalse(tested.equals(tested2));
 	}
+
 	
-	private CountryCode tested=new CountryCode("ZZ");
+	@Test
+	public void testToString(){
+		assertEquals("ZZ",this.tested.toString());
+	}
 }

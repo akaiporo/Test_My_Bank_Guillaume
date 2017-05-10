@@ -2,11 +2,19 @@ package metier.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import metier.PeriodUnit;
 
 public class TestPeriodUnit {
+	
+	
+	private PeriodUnit tested;
+	@Before
+	public void initTested(){
+		tested= new PeriodUnit("hebdomadaire");
+	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testPeriodUnit_IsEmpty() {
@@ -60,5 +68,11 @@ public class TestPeriodUnit {
 		assertFalse(tested.equals(tested2));
 	}
 	
-	private PeriodUnit tested = new PeriodUnit("hebdomadaire");;
+	
+	@Test
+	public void testToString(){
+		assertEquals("hebdomadaire",this.tested.toString());
+	}
+	
+	
 }

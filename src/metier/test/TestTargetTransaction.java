@@ -2,14 +2,18 @@ package metier.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import metier.TargetTransaction;
 
 public class TestTargetTransaction {
 
-	private TargetTransaction setTarget(){
-		return new TargetTransaction("Banque", "frhdteyf45gtf1dju98hgd1jup2");
+	private TargetTransaction tested;
+	@Before
+	public void initTarget(){
+		this.tested= new TargetTransaction("Banque", "frhdteyf45gtf1dju98hgd1jup2");
+		this.tested.setId(1);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -30,44 +34,73 @@ public class TestTargetTransaction {
 	}
 	@Test
 	public void testGetId() {
-		TargetTransaction tested = setTarget();
-		tested.setId(1);
-		assertEquals(1, tested.getId());
+		assertEquals(1, this.tested.getId());
 	}
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetId_isInvalid() {
-		TargetTransaction tested = setTarget();
-		tested.setId(0);
+		this.tested.setId(0);
 	}
 	@Test
-	public void testSetId() {
-		TargetTransaction tested = setTarget();
-		tested.setId(1);
+	public void testSetId_Valid() {
+		this.tested.setId(1);
 	}
+	
+	
 	@Test
 	public void testGetTargetName() {
-		TargetTransaction tested = setTarget();
-		assertEquals("Banque", tested.getTargetName());
+		assertEquals("Banque", this.tested.getTargetName());
 	}
-
+	@Test(expected=NullPointerException.class)
+	public void testSetTargetName_Null(){
+		this.tested.setTargetName(null);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetTargetName_Empty(){
+		this.tested.setTargetName("");
+	}
+	@Test
+	public void testSetTargetName_Valid(){
+		this.tested.setTargetName("a");
+	}
+	
+	
 	@Test
 	public void testGetIBAN() {
-		TargetTransaction tested = setTarget();
-		assertEquals("frhdteyf45gtf1dju98hgd1jup2", tested.getIBAN());
+		assertEquals("frhdteyf45gtf1dju98hgd1jup2", this.tested.getIBAN());
 	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetIBAN_InvalidLength(){
+		this.tested.setIBAN("21465");
+	}
+	@Test(expected=NullPointerException.class)
+	public void testSetIBAN_Null(){
+		this.tested.setIBAN(null);
+	}
+	@Test
+	public void testSetIBAN_Valid(){
+		this.tested.setIBAN("FR3456789123456789123456789");
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetIBAN_DoesNotStartWithFR(){
+		this.tested.setIBAN("123456789123456789123456789");
+	}
+	
 	
 	@Test
 	public void testEquals_IsValid() {
-		TargetTransaction tested = setTarget();
 		TargetTransaction tested2 = new TargetTransaction("Banque", "frhdteyf45gtf1dju98hgd1jup2");
 		assertTrue(tested.equals(tested2));
 	}
-	
 	@Test
 	public void testEquals_IsInvalid() {
-		TargetTransaction tested = setTarget();
 		TargetTransaction tested2 = new TargetTransaction("Banque", "frhdteyf45gtf1dju98hgd1jupA");
 		assertFalse(tested.equals(tested2));
+	}
+	
+	
+	@Test
+	public void testToString(){
+		assertEquals("Banque",tested.toString());
 	}
 
 }

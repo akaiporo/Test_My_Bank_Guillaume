@@ -7,6 +7,9 @@ import metier.AccountType;
 
 
 public class TestAccountType {
+	
+	private AccountType tested=new AccountType("foo");
+
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testAccountType_IsEmpty() {
@@ -60,6 +63,10 @@ public class TestAccountType {
 		assertFalse(this.tested.equals(tested2));
 	}
 	
-	private AccountType tested=new AccountType("foo");
-
+	
+	@Test
+	public void testToString(){
+		assertEquals("foo",this.tested.toString());
+	}
+	
 }
